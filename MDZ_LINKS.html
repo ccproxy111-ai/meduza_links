@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MeduzaGrief - Ссылки</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+body {
+    background: #050508;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: radial-gradient(circle at 50% 0%, #1a1a2e 0%, #050508 70%);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* --- ФОНОВЫЕ МЕДУЗЫ --- */
+#jellyfish-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+.jellyfish {
+    position: absolute;
+    font-size: 60px;
+    opacity: 0.08;
+    animation: floatUp linear infinite;
+    filter: blur(1px);
+}
+.jellyfish:nth-child(1) { left: 5%; font-size: 50px; animation-duration: 25s; animation-delay: 0s; }
+.jellyfish:nth-child(2) { left: 20%; font-size: 70px; animation-duration: 32s; animation-delay: -5s; }
+.jellyfish:nth-child(3) { left: 38%; font-size: 45px; animation-duration: 28s; animation-delay: -12s; }
+.jellyfish:nth-child(4) { left: 55%; font-size: 80px; animation-duration: 38s; animation-delay: -3s; }
+.jellyfish:nth-child(5) { left: 72%; font-size: 55px; animation-duration: 30s; animation-delay: -18s; }
+.jellyfish:nth-child(6) { left: 88%; font-size: 65px; animation-duration: 35s; animation-delay: -8s; }
+.jellyfish:nth-child(7) { left: 45%; font-size: 40px; animation-duration: 22s; animation-delay: -14s; }
+.jellyfish:nth-child(8) { left: 10%; font-size: 75px; animation-duration: 40s; animation-delay: -22s; }
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(110vh) rotate(0deg) scale(1);
+        opacity: 0;
+    }
+    10% { opacity: 0.08; }
+    90% { opacity: 0.08; }
+    100% {
+        transform: translateY(-20vh) rotate(360deg) scale(1.1);
+        opacity: 0;
+    }
+}
+
+/* --- ОСНОВНОЙ КОНТЕНТ --- */
+header, .content { position: relative; z-index: 1; }
+
+header {
+    width: 100%; max-width: 1000px;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 30px 20px;
+}
+.logo {
+    font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+    background: linear-gradient(90deg, #fff, #888);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    display: flex; align-items: center; gap: 8px;
+}
+.logo .emoji {
+    -webkit-text-fill-color: initial;
+    background: none;
+    font-size: 1.3rem;
+    filter: drop-shadow(0 0 6px rgba(0, 150, 255, 0.6));
+}
+nav a {
+    color: #888; text-decoration: none; margin-left: 25px;
+    cursor: pointer; transition: 0.3s;
+}
+nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
+.content { width: 100%; max-width: 1000px; padding: 20px; }
+.title { font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 40px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+
+.card {
+    background: #101014; border-radius: 20px; padding: 30px;
+    text-decoration: none; color: #fff; text-align: center;
+    border: 1px solid #1f1f26;
+    display: flex; flex-direction: column; align-items: center;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+    transform: translateY(-5px);
+    border-color: #444;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.05);
+}
+.avatar {
+    width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
+    margin-bottom: 15px; border: 2px solid #333; background: #1a1a1f;
+    transition: 0.3s;
+}
+.card:hover .avatar { border-color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.3); }
+.logo-svg { width: 40px; height: 40px; margin-top: 10px; transition: 0.3s; }
+.card:hover .logo-svg { transform: scale(1.15); filter: drop-shadow(0 0 8px rgba(255,255,255,0.3)); }
+.card h3 { font-size: 1.2rem; margin-bottom: 5px; }
+.card p { font-size: 0.85rem; color: #888; font-weight: 400; }
+
+.avatar-placeholder {
+    width: 80px; height: 80px; border-radius: 50%;
+    margin-bottom: 15px; border: 2px solid #333;
+    background: #00BFFF;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.2rem; font-weight: 800; color: #fff;
+    transition: 0.3s;
+}
+.card:hover .avatar-placeholder {
+    border-color: #fff;
+    box-shadow: 0 0 15px rgba(0,255,255,0.4);
+    transform: scale(1.05);
+}
+
+.minecraft-btn {
+    display: block; width: 100%; margin-top: 30px;
+    background: #4a4a4a; color: #fff; text-align: center;
+    padding: 20px; border-radius: 8px; font-size: 1.2rem; font-weight: 600;
+    text-decoration: none; cursor: pointer; border: none;
+    border-top: 4px solid #6a6a6a; border-left: 4px solid #6a6a6a;
+    border-bottom: 4px solid #2a2a2a; border-right: 4px solid #2a2a2a;
+    transition: 0.1s;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+.minecraft-btn:hover { background: #5a5a5a; }
+.minecraft-btn:active {
+    border-top: 4px solid #2a2a2a; border-left: 4px solid #2a2a2a;
+    border-bottom: 4px solid #6a6a6a; border-right: 4px solid #6a6a6a;
+    transform: translateY(2px);
+}
+
+.info { display: none; text-align: center; max-width: 800px; margin: 0 auto; }
+.info img { width: 150px; height: 150px; border-radius: 50%; border: 3px solid #333; margin-bottom: 20px; object-fit: cover; }
+.info .date { color: #555; font-size: 0.85rem; margin-bottom: 20px; }
+.info-text {
+    background: #101014; padding: 40px; border-radius: 20px;
+    color: #ccc; line-height: 1.8; border: 1px solid #1f1f26; text-align: left;
+}
+.info-text strong { color: #fff; font-size: 1.2rem; display: block; margin-bottom: 15px; }
+.info-text p { margin-bottom: 15px; }
+
+.modal {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+    justify-content: center; align-items: center; z-index: 1000;
+}
+.modal.active { display: flex; }
+.modal-content {
+    background: #1a1a1f; padding: 30px; border-radius: 20px;
+    border: 1px solid #333; text-align: center; max-width: 400px; width: 90%;
+    animation: fadeIn 0.3s ease-out;
+}
+.modal-content h3 { margin-bottom: 20px; font-size: 1.3rem; }
+.mail-options { display: flex; flex-direction: column; gap: 15px; }
+.mail-btn {
+    display: flex; align-items: center; gap: 15px;
+    padding: 15px 20px; border-radius: 12px; text-decoration: none;
+    color: #fff; font-weight: 600; transition: 0.2s;
+    border: 1px solid #2a2a30; background: #101014;
+}
+.mail-btn:hover { background: #25252b; border-color: #555; transform: scale(1.02); }
+.mail-btn img {
+    width: 36px; height: 36px; border-radius: 50%;
+    object-fit: cover; flex-shrink: 0; background: #fff;
+}
+.close-btn {
+    margin-top: 20px; background: #333; color: #fff; border: none;
+    padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: 0.2s;
+}
+.close-btn:hover { background: #555; }
+
+@keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+</style>
+</head>
+<body>
+
+<!-- Фоновые медузы -->
+<div id="jellyfish-bg">
+    <div class="jellyfish">🪼</div>
+    <div class="jellyfish">🪼</div>
+    <div class="jellyfish">🪼</div>
+    <div class="jellyfish">🪼</div>
+    <div class="jellyfish">🪼</div>
+    <div class="jellyfish">🪼</div>
+    <div class="jellyfish">🪼</div>
+    <div class="jellyfish">🪼</div>
+</div>
+
+<header>
+    <div class="logo"><span class="emoji">🪼</span> MeduzaGrief</div>
+    <nav>
+        <a onclick="show('links')" id="n-links" class="active">Ссылки</a>
+        <a onclick="show('info')" id="n-info">Информация</a>
+    </nav>
+</header>
+
+<div class="content">
+    <div id="links" style="display:block;">
+        <h2 class="title">Ссылки</h2>
+        <div class="grid">
+
+            <!-- YouTube -->
+            <a href="https://www.youtube.com/@immeduza" target="_blank" class="card">
+                <img src="https://unavatar.io/youtube/@immeduza" class="avatar" alt="Avatar" onerror="this.style.background='#222'">
+                <h3>YouTube</h3>
+                <p>MeduzaGrief</p>
+                <svg class="logo-svg" viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8z" fill="#FF0000"/><path d="M9.5 15.6V8.4L15.8 12l-6.3 3.6z" fill="#fff"/></svg>
+            </a>
+
+            <!-- Telegram -->
+            <a href="https://t.me/meduzagrief" target="_blank" class="card">
+                <img src="https://unavatar.io/telegram/meduzagrief" class="avatar" alt="Avatar" onerror="this.style.background='#222'">
+                <h3>ТУТ МЕДУЗА 🪼</h3>
+                <p>Telegram</p>
+                <svg class="logo-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#0088cc"/><path d="M17.6 7.2l-2 9.4c-.1.7-.6.9-1.2.6l-3.3-2.4-1.6 1.5c-.2.2-.3.3-.6.3l.2-3.3 6-5.4c.3-.2 0-.3-.4-.1l-7.4 4.7-3.2-1c-.7-.2-.7-.7.1-1l12.5-4.8c.6-.2 1.1.1.9.9z" fill="#fff"/></svg>
+            </a>
+
+            <!-- Twitch -->
+            <a href="https://www.twitch.tv/medy3aoffc" target="_blank" class="card">
+                <img src="https://unavatar.io/twitch/medy3aoffc" class="avatar" alt="Avatar" onerror="this.style.background='#222'">
+                <h3>medy3aoffc</h3>
+                <p>Twitch</p>
+                <svg class="logo-svg" viewBox="0 0 24 24"><path d="M4 2L2 5v15h5v3l3-3h5l6-6V2H4zm16 13l-3 3h-5l-3 3v-3H5V4h15v11z" fill="#9146FF"/><path d="M11 7h2v6h-2z" fill="#fff"/><path d="M16 7h2v6h-2z" fill="#fff"/></svg>
+            </a>
+
+            <!-- VK -->
+            <a href="https://vk.ru/id873786966" target="_blank" class="card">
+                <img src="https://media.discordapp.net/attachments/1499840717235687527/1554519652426846278/1nirT8__NRlMJCkPiAgRWHAgJ81yPv-5vycozMGJ86KeWsy7MyZThZzANEsRmXY11oWc3P0o2TghAITa2vBF7XgP.jpg?ex=6abd2ebe&is=6abbdd3e&hm=d646df4cfa0bb7395ac1f86e1727497cee3a55ffdf3c9d8077e168dbe56d552f&=&format=webp&width=865&height=1024" class="avatar" alt="Avatar">
+                <h3>Никита Белин</h3>
+                <p>ВКонтакте</p>
+                <svg class="logo-svg" viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#0077FF"/><path d="M13.2 17.8c-5.8 0-9.1-4-9.2-10.6h2.9c.1 4.9 2.3 7 4 7.4V7.2h2.7v4.4c1.7-.2 3.5-2.2 4.1-4.4h2.7c-.5 2.7-2.4 4.7-3.8 5.5 1.4.7 3.5 2.5 4.3 5.1h-3c-.6-1.9-2.1-3.4-4.3-3.6v3.6h-.4z" fill="#fff"/></svg>
+            </a>
+
+            <!-- Steam -->
+            <a href="https://steamcommunity.com/profiles/76561199509007013/" target="_blank" class="card">
+                <img src="https://media.discordapp.net/attachments/1499840717235687527/1554519652766326815/7e2b01b4a6d4d0e528e827d3e2b7d09ea413b9b6_full.jpg?ex=6abd2ebe&is=6abbdd3e&hm=605669d3777047cbb5e95d7007ba62c73346801eab31458c7d63f70022606390&=&format=webp" class="avatar" alt="Avatar">
+                <h3>медуза</h3>
+                <p>Steam профиль</p>
+                <svg class="logo-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#171a21"/><path d="M12 2a10 10 0 0 0-9.9 8.6l5.3 2.2a2.8 2.8 0 0 1 1.5-.4h.2l2.4-3.5v-.1a3.7 3.7 0 1 1 3.7 3.7h-.1l-3.4 2.4v.2a2.8 2.8 0 0 1-5.6.4L2 13.8A10 10 0 1 0 12 2zm-3.3 13.3l-1.2-.5a2.1 2.1 0 0 0 3.7-1.3 2.1 2.1 0 0 0-2.1-2.1c-.2 0-.3 0-.5.1l1.2.5a1.5 1.5 0 1 1-1.1 2.8zm8-2.8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm0-4.3a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z" fill="#fff"/></svg>
+            </a>
+
+            <!-- Предложка (последняя) -->
+            <a href="https://t.me/meduzagrief_bot" target="_blank" class="card">
+                <div class="avatar-placeholder">P</div>
+                <h3>predlowkamdz</h3>
+                <p>Предложка</p>
+                <svg class="logo-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#0088cc"/><path d="M17.6 7.2l-2 9.4c-.1.7-.6.9-1.2.6l-3.3-2.4-1.6 1.5c-.2.2-.3.3-.6.3l.2-3.3 6-5.4c.3-.2 0-.3-.4-.1l-7.4 4.7-3.2-1c-.7-.2-.7-.7.1-1l12.5-4.8c.6-.2 1.1.1.9.9z" fill="#fff"/></svg>
+            </a>
+
+        </div>
+
+        <button class="minecraft-btn" onclick="openModal()">Связь со мной (по рекламе и т.д)</button>
+    </div>
+
+    <!-- Информация -->
+    <div id="info" class="info">
+        <h2 class="title">Информация</h2>
+        <img src="https://unavatar.io/youtube/@immeduza" alt="Avatar" onerror="this.style.background='#222'">
+        <div class="date">Информация была обновлена 29.09</div>
+        <div class="info-text">
+            <strong>Всем хай! Я медуза :/ Вот инфа обо мне:</strong>
+            <p>Меня зовут Никита, псевдоним на ютубе MeduzaGrief, а так просто медуза, я пацан, мне сейчас 14 лет, занимаюсь всем чем хочу в интернете, в основном делаю видосы на свой ютуб канал.</p>
+            <p>Подписывайся на мои соц. сети, если хочешь следить за мной. Спасибо ❤️‍🔥</p>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно с почтами -->
+<div class="modal" id="mailModal">
+    <div class="modal-content">
+        <h3>Выберите сервис для связи</h3>
+        <div class="mail-options">
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=meduzakryt222@gmail.com" target="_blank" class="mail-btn">
+                <img src="https://media.discordapp.net/attachments/1499840717235687527/1554520216459935754/images.png?ex=6abd2f45&is=6abbddc5&hm=1a7efb364d5a118d834cb8c72bd4b6f4d0452ff248b6d55e5cdc986a8cec1a2b&=&format=webp&quality=lossless" alt="Gmail">
+                Gmail
+            </a>
+            <a href="https://e.mail.ru/compose/?to=meduzakryt222@gmail.com" target="_blank" class="mail-btn">
+                <img src="https://media.discordapp.net/attachments/1499840717235687527/1554520215876931624/images_1.png?ex=6abd2f45&is=6abbddc5&hm=54e5de26d16e86904ebbad65e5804214949f8fc4dcf014c7d1de07f029795cb6&=&format=webp&quality=lossless" alt="Mail.ru">
+                Mail.ru
+            </a>
+            <a href="https://mail.yandex.ru/compose?to=meduzakryt222@gmail.com" target="_blank" class="mail-btn">
+                <img src="https://media.discordapp.net/attachments/1499840717235687527/1554520216988291154/unnamed.png?ex=6abd2f45&is=6abbddc5&hm=43bccaeec58a114a9eacc67c71a4a7e2ae5322f95ebebcf5d8f6bfcdc9b0d991&=&format=webp&quality=lossless" alt="Яндекс">
+                Яндекс Почта
+            </a>
+        </div>
+        <button class="close-btn" onclick="closeModal()">Закрыть</button>
+    </div>
+</div>
+
+<script>
+    function show(id) {
+        document.getElementById('links').style.display = id === 'links' ? 'block' : 'none';
+        document.getElementById('info').style.display = id === 'info' ? 'block' : 'none';
+        document.getElementById('n-links').classList.toggle('active', id === 'links');
+        document.getElementById('n-info').classList.toggle('active', id === 'info');
+    }
+    function openModal() { document.getElementById('mailModal').classList.add('active'); }
+    function closeModal() { document.getElementById('mailModal').classList.remove('active'); }
+    document.getElementById('mailModal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+
+    let audioCtx = null;
+    function getCtx() {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        return audioCtx;
+    }
+    function playTone(freq, duration, vol) {
+        try {
+            const ctx = getCtx();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(vol, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + duration);
+        } catch(e) {}
+    }
+    function playClick() {
+        playTone(600, 0.08, 0.08);
+        setTimeout(() => playTone(900, 0.06, 0.05), 40);
+    }
+    function playHover() { playTone(1200, 0.04, 0.03); }
+
+    document.querySelectorAll('.card, .minecraft-btn, .mail-btn, .close-btn, nav a').forEach(el => {
+        el.addEventListener('mouseenter', playHover);
+        el.addEventListener('click', playClick);
+    });
+</script>
+
+</body>
+</html>
