@@ -19,7 +19,7 @@ body {
     position: relative;
 }
 
-/* --- ФОНОВЫЕ МЕДУЗЫ --- */
+/* ФОНОВЫЕ МЕДУЗЫ */
 #jellyfish-bg {
     position: fixed;
     top: 0; left: 0;
@@ -43,21 +43,13 @@ body {
 .jellyfish:nth-child(6) { left: 88%; font-size: 65px; animation-duration: 35s; animation-delay: -8s; }
 .jellyfish:nth-child(7) { left: 45%; font-size: 40px; animation-duration: 22s; animation-delay: -14s; }
 .jellyfish:nth-child(8) { left: 10%; font-size: 75px; animation-duration: 40s; animation-delay: -22s; }
-
 @keyframes floatUp {
-    0% {
-        transform: translateY(110vh) rotate(0deg) scale(1);
-        opacity: 0;
-    }
+    0% { transform: translateY(110vh) rotate(0deg) scale(1); opacity: 0; }
     10% { opacity: 0.08; }
     90% { opacity: 0.08; }
-    100% {
-        transform: translateY(-20vh) rotate(360deg) scale(1.1);
-        opacity: 0;
-    }
+    100% { transform: translateY(-20vh) rotate(360deg) scale(1.1); opacity: 0; }
 }
 
-/* --- ОСНОВНОЙ КОНТЕНТ --- */
 header, .content { position: relative; z-index: 1; }
 
 header {
@@ -80,33 +72,112 @@ header {
 nav a {
     color: #888; text-decoration: none; margin-left: 25px;
     cursor: pointer; transition: 0.3s;
+    position: relative;
 }
 nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
-.content { width: 100%; max-width: 1000px; padding: 20px; }
+
+/* КОНТЕЙНЕР СЕКЦИЙ */
+.content {
+    width: 100%; max-width: 1000px; padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: height 0.4s ease;
+}
+
+/* СЕКЦИИ - обе в потоке, но переключаются через opacity/transform */
+.section {
+    width: 100%;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    will-change: opacity, transform;
+}
+.section.hidden {
+    display: none;
+}
+.section.fade-out-left {
+    animation: fadeOutLeft 0.4s ease forwards;
+}
+.section.fade-out-right {
+    animation: fadeOutRight 0.4s ease forwards;
+}
+.section.fade-in-left {
+    animation: fadeInLeft 0.4s ease forwards;
+}
+.section.fade-in-right {
+    animation: fadeInRight 0.4s ease forwards;
+}
+
+@keyframes fadeOutLeft {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(-40px); }
+}
+@keyframes fadeOutRight {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(40px); }
+}
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
 .title { font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 40px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
 
+/* КАРТОЧКИ */
 .card {
     background: #101014; border-radius: 20px; padding: 30px;
     text-decoration: none; color: #fff; text-align: center;
     border: 1px solid #1f1f26;
     display: flex; flex-direction: column; align-items: center;
-    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                border-color 0.3s, box-shadow 0.4s, background 0.3s;
+    position: relative;
+    overflow: hidden;
 }
+.card::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.06) 50%, transparent 60%);
+    transform: translateX(-100%) translateY(-100%);
+    transition: transform 0.6s;
+    pointer-events: none;
+}
+.card:hover::after { transform: translateX(100%) translateY(100%); }
 .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px) scale(1.03) rotate(-1deg);
     border-color: #444;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.05);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.6), 0 0 25px rgba(0,150,255,0.1);
+    background: #15151a;
 }
+.card:active { transform: translateY(-2px) scale(0.98); }
+
 .avatar {
     width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
     margin-bottom: 15px; border: 2px solid #333; background: #1a1a1f;
-    transition: 0.3s;
+    transition: 0.4s;
 }
-.card:hover .avatar { border-color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.3); }
-.logo-svg { width: 40px; height: 40px; margin-top: 10px; transition: 0.3s; }
-.card:hover .logo-svg { transform: scale(1.15); filter: drop-shadow(0 0 8px rgba(255,255,255,0.3)); }
-.card h3 { font-size: 1.2rem; margin-bottom: 5px; }
+.card:hover .avatar {
+    border-color: #fff;
+    box-shadow: 0 0 20px rgba(255,255,255,0.4);
+    transform: scale(1.1) rotate(5deg);
+    animation: breathe 1.5s ease-in-out infinite;
+}
+@keyframes breathe {
+    0%, 100% { transform: scale(1.1) rotate(5deg); }
+    50% { transform: scale(1.15) rotate(-3deg); }
+}
+.logo-svg { width: 40px; height: 40px; margin-top: 10px; transition: 0.4s; }
+.card:hover .logo-svg {
+    transform: scale(1.2) rotate(-10deg);
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.4));
+}
+.card h3 { font-size: 1.2rem; margin-bottom: 5px; transition: 0.3s; }
+.card:hover h3 { letter-spacing: 1px; }
 .card p { font-size: 0.85rem; color: #888; font-weight: 400; }
 
 .avatar-placeholder {
@@ -115,12 +186,13 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
     background: #00BFFF;
     display: flex; align-items: center; justify-content: center;
     font-size: 2.2rem; font-weight: 800; color: #fff;
-    transition: 0.3s;
+    transition: 0.4s;
 }
 .card:hover .avatar-placeholder {
     border-color: #fff;
-    box-shadow: 0 0 15px rgba(0,255,255,0.4);
-    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0,255,255,0.5);
+    transform: scale(1.1) rotate(-5deg);
+    animation: breathe 1.5s ease-in-out infinite;
 }
 
 .minecraft-btn {
@@ -130,17 +202,23 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
     text-decoration: none; cursor: pointer; border: none;
     border-top: 4px solid #6a6a6a; border-left: 4px solid #6a6a6a;
     border-bottom: 4px solid #2a2a2a; border-right: 4px solid #2a2a2a;
-    transition: 0.1s;
+    transition: 0.15s;
     box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
 }
-.minecraft-btn:hover { background: #5a5a5a; }
+.minecraft-btn:hover {
+    background: #5a5a5a;
+    transform: scale(1.01);
+    letter-spacing: 0.5px;
+}
 .minecraft-btn:active {
     border-top: 4px solid #2a2a2a; border-left: 4px solid #2a2a2a;
     border-bottom: 4px solid #6a6a6a; border-right: 4px solid #6a6a6a;
-    transform: translateY(2px);
+    transform: translateY(3px) scale(0.99);
 }
 
-.info { display: none; text-align: center; max-width: 800px; margin: 0 auto; }
+.info { text-align: center; max-width: 800px; margin: 0 auto; }
 .info img { width: 150px; height: 150px; border-radius: 50%; border: 3px solid #333; margin-bottom: 20px; object-fit: cover; }
 .info .date { color: #555; font-size: 0.85rem; margin-bottom: 20px; }
 .info-text {
@@ -154,38 +232,77 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
     display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
     justify-content: center; align-items: center; z-index: 1000;
+    opacity: 0; transition: opacity 0.3s;
 }
-.modal.active { display: flex; }
+.modal.active { display: flex; opacity: 1; }
 .modal-content {
     background: #1a1a1f; padding: 30px; border-radius: 20px;
     border: 1px solid #333; text-align: center; max-width: 400px; width: 90%;
-    animation: fadeIn 0.3s ease-out;
+    animation: modalIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.8) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
 }
 .modal-content h3 { margin-bottom: 20px; font-size: 1.3rem; }
 .mail-options { display: flex; flex-direction: column; gap: 15px; }
 .mail-btn {
     display: flex; align-items: center; gap: 15px;
     padding: 15px 20px; border-radius: 12px; text-decoration: none;
-    color: #fff; font-weight: 600; transition: 0.2s;
+    color: #fff; font-weight: 600; transition: all 0.3s;
     border: 1px solid #2a2a30; background: #101014;
 }
-.mail-btn:hover { background: #25252b; border-color: #555; transform: scale(1.02); }
+.mail-btn:hover {
+    background: #25252b;
+    border-color: #555;
+    transform: translateX(5px) scale(1.02);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.mail-btn:active { transform: translateX(2px) scale(0.98); }
 .mail-btn img {
     width: 36px; height: 36px; border-radius: 50%;
     object-fit: cover; flex-shrink: 0; background: #fff;
+    transition: 0.3s;
 }
+.mail-btn:hover img { transform: rotate(-8deg) scale(1.1); }
+
 .close-btn {
     margin-top: 20px; background: #333; color: #fff; border: none;
     padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: 0.2s;
 }
-.close-btn:hover { background: #555; }
+.close-btn:hover { background: #555; transform: scale(1.05); }
+.close-btn:active { transform: scale(0.95); }
 
-@keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+#toast {
+    position: fixed;
+    bottom: 30px; left: 50%;
+    transform: translateX(-50%) translateY(150%);
+    background: #1a1a1f;
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 12px;
+    border: 1px solid #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(0,150,255,0.15);
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: flex; align-items: center; gap: 10px;
+    z-index: 2000;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+    opacity: 0;
+    pointer-events: none;
+}
+#toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+#toast::before {
+    content: '🔗';
+    font-size: 1.2rem;
+}
 </style>
 </head>
 <body>
 
-<!-- Фоновые медузы -->
 <div id="jellyfish-bg">
     <div class="jellyfish">🪼</div>
     <div class="jellyfish">🪼</div>
@@ -205,12 +322,13 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
     </nav>
 </header>
 
-<div class="content">
-    <div id="links" style="display:block;">
+<div class="content" id="content">
+
+    <!-- СЕКЦИЯ ССЫЛОК -->
+    <div class="section" id="links">
         <h2 class="title">Ссылки</h2>
         <div class="grid">
 
-            <!-- YouTube -->
             <a href="https://www.youtube.com/@immeduza" target="_blank" class="card">
                 <img src="https://unavatar.io/youtube/@immeduza" class="avatar" alt="Avatar" onerror="this.style.background='#222'">
                 <h3>YouTube</h3>
@@ -218,7 +336,6 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
                 <svg class="logo-svg" viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8z" fill="#FF0000"/><path d="M9.5 15.6V8.4L15.8 12l-6.3 3.6z" fill="#fff"/></svg>
             </a>
 
-            <!-- Telegram -->
             <a href="https://t.me/meduzagrief" target="_blank" class="card">
                 <img src="https://unavatar.io/telegram/meduzagrief" class="avatar" alt="Avatar" onerror="this.style.background='#222'">
                 <h3>ТУТ МЕДУЗА 🪼</h3>
@@ -226,7 +343,6 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
                 <svg class="logo-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#0088cc"/><path d="M17.6 7.2l-2 9.4c-.1.7-.6.9-1.2.6l-3.3-2.4-1.6 1.5c-.2.2-.3.3-.6.3l.2-3.3 6-5.4c.3-.2 0-.3-.4-.1l-7.4 4.7-3.2-1c-.7-.2-.7-.7.1-1l12.5-4.8c.6-.2 1.1.1.9.9z" fill="#fff"/></svg>
             </a>
 
-            <!-- Twitch -->
             <a href="https://www.twitch.tv/medy3aoffc" target="_blank" class="card">
                 <img src="https://unavatar.io/twitch/medy3aoffc" class="avatar" alt="Avatar" onerror="this.style.background='#222'">
                 <h3>medy3aoffc</h3>
@@ -234,7 +350,6 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
                 <svg class="logo-svg" viewBox="0 0 24 24"><path d="M4 2L2 5v15h5v3l3-3h5l6-6V2H4zm16 13l-3 3h-5l-3 3v-3H5V4h15v11z" fill="#9146FF"/><path d="M11 7h2v6h-2z" fill="#fff"/><path d="M16 7h2v6h-2z" fill="#fff"/></svg>
             </a>
 
-            <!-- VK -->
             <a href="https://vk.ru/id873786966" target="_blank" class="card">
                 <img src="https://media.discordapp.net/attachments/1499840717235687527/1554519652426846278/1nirT8__NRlMJCkPiAgRWHAgJ81yPv-5vycozMGJ86KeWsy7MyZThZzANEsRmXY11oWc3P0o2TghAITa2vBF7XgP.jpg?ex=6abd2ebe&is=6abbdd3e&hm=d646df4cfa0bb7395ac1f86e1727497cee3a55ffdf3c9d8077e168dbe56d552f&=&format=webp&width=865&height=1024" class="avatar" alt="Avatar">
                 <h3>Никита Белин</h3>
@@ -242,7 +357,6 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
                 <svg class="logo-svg" viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#0077FF"/><path d="M13.2 17.8c-5.8 0-9.1-4-9.2-10.6h2.9c.1 4.9 2.3 7 4 7.4V7.2h2.7v4.4c1.7-.2 3.5-2.2 4.1-4.4h2.7c-.5 2.7-2.4 4.7-3.8 5.5 1.4.7 3.5 2.5 4.3 5.1h-3c-.6-1.9-2.1-3.4-4.3-3.6v3.6h-.4z" fill="#fff"/></svg>
             </a>
 
-            <!-- Steam -->
             <a href="https://steamcommunity.com/profiles/76561199509007013/" target="_blank" class="card">
                 <img src="https://media.discordapp.net/attachments/1499840717235687527/1554519652766326815/7e2b01b4a6d4d0e528e827d3e2b7d09ea413b9b6_full.jpg?ex=6abd2ebe&is=6abbdd3e&hm=605669d3777047cbb5e95d7007ba62c73346801eab31458c7d63f70022606390&=&format=webp" class="avatar" alt="Avatar">
                 <h3>медуза</h3>
@@ -250,7 +364,6 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
                 <svg class="logo-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#171a21"/><path d="M12 2a10 10 0 0 0-9.9 8.6l5.3 2.2a2.8 2.8 0 0 1 1.5-.4h.2l2.4-3.5v-.1a3.7 3.7 0 1 1 3.7 3.7h-.1l-3.4 2.4v.2a2.8 2.8 0 0 1-5.6.4L2 13.8A10 10 0 1 0 12 2zm-3.3 13.3l-1.2-.5a2.1 2.1 0 0 0 3.7-1.3 2.1 2.1 0 0 0-2.1-2.1c-.2 0-.3 0-.5.1l1.2.5a1.5 1.5 0 1 1-1.1 2.8zm8-2.8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm0-4.3a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z" fill="#fff"/></svg>
             </a>
 
-            <!-- Предложка (последняя) -->
             <a href="https://t.me/meduzagrief_bot" target="_blank" class="card">
                 <div class="avatar-placeholder">P</div>
                 <h3>predlowkamdz</h3>
@@ -259,24 +372,25 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
             </a>
 
         </div>
-
         <button class="minecraft-btn" onclick="openModal()">Связь со мной (по рекламе и т.д)</button>
     </div>
 
-    <!-- Информация -->
-    <div id="info" class="info">
+    <!-- СЕКЦИЯ ИНФОРМАЦИИ -->
+    <div class="section hidden" id="info">
         <h2 class="title">Информация</h2>
-        <img src="https://unavatar.io/youtube/@immeduza" alt="Avatar" onerror="this.style.background='#222'">
-        <div class="date">Информация была обновлена 29.09</div>
-        <div class="info-text">
-            <strong>Всем хай! Я медуза :/ Вот инфа обо мне:</strong>
-            <p>Меня зовут Никита, псевдоним на ютубе MeduzaGrief, а так просто медуза, я пацан, мне сейчас 14 лет, занимаюсь всем чем хочу в интернете, в основном делаю видосы на свой ютуб канал.</p>
-            <p>Подписывайся на мои соц. сети, если хочешь следить за мной. Спасибо ❤️‍🔥</p>
+        <div class="info">
+            <img src="https://unavatar.io/youtube/@immeduza" alt="Avatar" onerror="this.style.background='#222'">
+            <div class="date">Информация была обновлена 29.09</div>
+            <div class="info-text">
+                <strong>Всем хай! Я медуза :/ Вот инфа обо мне:</strong>
+                <p>Меня зовут Никита, псевдоним на ютубе MeduzaGrief, а так просто медуза, я пацан, мне сейчас 14 лет, занимаюсь всем чем хочу в интернете, в основном делаю видосы на свой ютуб канал.</p>
+                <p>Подписывайся на мои соц. сети, если хочешь следить за мной. Спасибо ❤️‍🔥</p>
+            </div>
         </div>
     </div>
+
 </div>
 
-<!-- Модальное окно с почтами -->
 <div class="modal" id="mailModal">
     <div class="modal-content">
         <h3>Выберите сервис для связи</h3>
@@ -298,19 +412,71 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
     </div>
 </div>
 
+<div id="toast">Ссылка открыта в новом окне или приложении</div>
+
 <script>
+    const secLinks = document.getElementById('links');
+    const secInfo = document.getElementById('info');
+    const navLinks = document.getElementById('n-links');
+    const navInfo = document.getElementById('n-info');
+    let currentSection = 'links';
+    let animating = false;
+
     function show(id) {
-        document.getElementById('links').style.display = id === 'links' ? 'block' : 'none';
-        document.getElementById('info').style.display = id === 'info' ? 'block' : 'none';
-        document.getElementById('n-links').classList.toggle('active', id === 'links');
-        document.getElementById('n-info').classList.toggle('active', id === 'info');
+        if (id === currentSection || animating) return;
+        animating = true;
+
+        const from = id === 'links' ? secInfo : secLinks;
+        const to = id === 'links' ? secLinks : secInfo;
+        const dir = id === 'links' ? 'right' : 'left'; // куда уезжает старый
+
+        // Старый: анимация исчезновения
+        from.classList.add('fade-out-' + dir);
+        from.classList.remove('hidden');
+
+        setTimeout(() => {
+            from.classList.add('hidden');
+            from.classList.remove('fade-out-' + dir);
+
+            // Новый: показываем и анимируем появление
+            to.classList.remove('hidden');
+            to.classList.add('fade-in-' + dir);
+
+            setTimeout(() => {
+                to.classList.remove('fade-in-' + dir);
+                animating = false;
+            }, 400);
+        }, 400);
+
+        navLinks.classList.toggle('active', id === 'links');
+        navInfo.classList.toggle('active', id === 'info');
+        currentSection = id;
     }
-    function openModal() { document.getElementById('mailModal').classList.add('active'); }
-    function closeModal() { document.getElementById('mailModal').classList.remove('active'); }
+
+    // Инициализация: показываем ссылки
+    secLinks.classList.remove('hidden');
+    secInfo.classList.add('hidden');
+
+    // Модальное окно
+    function openModal() { document.getElementById('mailModal').classList.add('active'); playClick(); }
+    function closeModal() { document.getElementById('mailModal').classList.remove('active'); playClick(); }
     document.getElementById('mailModal').addEventListener('click', function(e) {
         if (e.target === this) closeModal();
     });
 
+    // Плашка
+    const toast = document.getElementById('toast');
+    let toastTimer = null;
+    function showToast() {
+        toast.classList.add('show');
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+    document.querySelectorAll('a[href]').forEach(link => {
+        link.addEventListener('click', () => showToast());
+    });
+
+    // Звуки
     let audioCtx = null;
     function getCtx() {
         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
