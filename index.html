@@ -299,6 +299,36 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
     content: '🔗';
     font-size: 1.2rem;
 }
+
+/* ===== АНИМАЦИЯ ПОЯВЛЕНИЯ КАРТОЧЕК ===== */
+.card,
+.minecraft-btn {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    filter: blur(6px);
+}
+
+.card.reveal,
+.minecraft-btn.reveal {
+    animation: cardReveal 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes cardReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+        filter: blur(6px);
+    }
+    60% {
+        opacity: 1;
+        filter: blur(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
 </style>
 </head>
 <body>
@@ -506,6 +536,18 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
     document.querySelectorAll('.card, .minecraft-btn, .mail-btn, .close-btn, nav a').forEach(el => {
         el.addEventListener('mouseenter', playHover);
         el.addEventListener('click', playClick);
+    });
+
+    // ===== АНИМАЦИЯ ПОЯВЛЕНИЯ КАРТОЧЕК ПРИ ЗАХОДЕ =====
+    window.addEventListener('load', () => {
+        const linksSection = document.getElementById('links');
+        const items = linksSection.querySelectorAll('.card, .minecraft-btn');
+
+        items.forEach((item, index) => {
+            setTimeout(() => {
+                item.classList.add('reveal');
+            }, index * 120);
+        });
     });
 </script>
 
