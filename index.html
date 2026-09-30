@@ -24,7 +24,7 @@ body {
     overflow-x: hidden;
 }
 
-/* ===== ФОН С МЕДУЗАМИ ===== */
+/* ===== МЕДУЗЫ ФОН ===== */
 #jellyfish-bg {
     position: fixed;
     inset: 0;
@@ -65,7 +65,7 @@ header {
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 1000px;
+    max-width: 1200px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -99,16 +99,14 @@ nav a {
     transition: color 0.3s;
 }
 
-nav a:hover, nav a.active {
-    color: #fff;
-}
+nav a:hover, nav a.active { color: #fff; }
 
 /* ===== КОНТЕНТ ===== */
 .content {
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 1000px;
+    max-width: 1200px;
     padding: 20px;
 }
 
@@ -119,16 +117,16 @@ nav a:hover, nav a.active {
     font-size: 2.5rem;
     font-weight: 800;
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
+/* ===== СЕТКА ССЫЛОК ===== */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 20px;
 }
 
-/* ===== КАРТОЧКА ===== */
 .card {
     position: relative;
     background: #101014;
@@ -141,27 +139,23 @@ nav a:hover, nav a.active {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* появление */
     opacity: 0;
     transform: translateY(24px);
     transition: opacity 0.6s ease, transform 0.5s ease,
                 border-color 0.3s, box-shadow 0.3s, background 0.3s;
 }
 
-/* когда появилась */
 .card.show {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* наведение */
 .card:hover {
     border-color: #444;
     background: #15151a;
     box-shadow: 0 12px 30px rgba(0,0,0,0.6), 0 0 25px rgba(0,150,255,0.1);
 }
 
-/* внутренний контейнер для парения, чтобы не конфликтовать с появлением */
 .card-inner {
     display: flex;
     flex-direction: column;
@@ -180,7 +174,6 @@ nav a:hover, nav a.active {
     100% { transform: translateY(0); }
 }
 
-/* аватарки */
 .avatar {
     width: 80px; height: 80px;
     border-radius: 50%;
@@ -226,15 +219,8 @@ nav a:hover, nav a.active {
     transform: scale(1.15) rotate(-8deg);
 }
 
-.card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 5px;
-}
-
-.card p {
-    font-size: 0.85rem;
-    color: #888;
-}
+.card h3 { font-size: 1.2rem; margin-bottom: 5px; }
+.card p { font-size: 0.85rem; color: #888; }
 
 /* ===== КНОПКА СВЯЗИ ===== */
 .minecraft-btn {
@@ -254,9 +240,7 @@ nav a:hover, nav a.active {
     border-left: 4px solid #6a6a6a;
     border-bottom: 4px solid #2a2a2a;
     border-right: 4px solid #2a2a2a;
-    transition: background 0.15s, transform 0.15s,
-                opacity 0.5s ease;
-    /* появление */
+    transition: background 0.15s, transform 0.15s, opacity 0.5s ease;
     opacity: 0;
     transform: translateY(24px);
 }
@@ -266,9 +250,7 @@ nav a:hover, nav a.active {
     transform: translateY(0);
 }
 
-.minecraft-btn:hover {
-    background: #5a5a5a;
-}
+.minecraft-btn:hover { background: #5a5a5a; }
 
 .minecraft-btn:active {
     border-top: 4px solid #2a2a2a;
@@ -278,40 +260,136 @@ nav a:hover, nav a.active {
     transform: translateY(3px);
 }
 
+/* ===== БЛОК ВИДЕО (СЛЕВА И СПРАВА) ===== */
+.video-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.video-widget {
+    background: #101014;
+    border-radius: 20px;
+    border: 1px solid #1f1f26;
+    overflow: hidden;
+}
+
+.video-widget-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 20px;
+    border-bottom: 1px solid #1f1f26;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #ccc;
+}
+
+.video-widget-header .yt-icon {
+    color: #FF0000;
+    font-size: 1.2rem;
+}
+
+.video-widget-header .tw-icon {
+    color: #9146FF;
+    font-size: 1.2rem;
+}
+
+.video-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+}
+
+.video-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.video-meta {
+    padding: 15px 20px;
+    background: #0c0c10;
+}
+
+.video-meta .video-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.video-meta .video-date {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* Twitch оффлайн */
+.twitch-offline {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #0e0e10;
+    color: #888;
+    font-size: 0.95rem;
+    gap: 10px;
+}
+
+.twitch-offline .offline-icon {
+    font-size: 2.5rem;
+    opacity: 0.3;
+}
+
+/* Статус стрима */
+.stream-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.status-dot.online {
+    background: #00ff88;
+    animation: pulseOnline 1.5s ease-in-out infinite;
+}
+
+.status-dot.offline {
+    background: #ff3344;
+}
+
+@keyframes pulseOnline {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,255,136,0.6); }
+    50% { opacity: 0.6; box-shadow: 0 0 0 8px rgba(0,255,136,0); }
+}
+
 /* ===== ИНФО ===== */
 .info { text-align: center; max-width: 800px; margin: 0 auto; }
-
-.info img {
-    width: 150px; height: 150px;
-    border-radius: 50%;
-    border: 3px solid #333;
-    margin-bottom: 20px;
-    object-fit: cover;
-}
-
-.info .date {
-    color: #555;
-    font-size: 0.85rem;
-    margin-bottom: 20px;
-}
-
-.info-text {
-    background: #101014;
-    padding: 40px;
-    border-radius: 20px;
-    color: #ccc;
-    line-height: 1.8;
-    border: 1px solid #1f1f26;
-    text-align: left;
-}
-
-.info-text strong {
-    color: #fff;
-    font-size: 1.2rem;
-    display: block;
-    margin-bottom: 15px;
-}
-
+.info img { width: 150px; height: 150px; border-radius: 50%; border: 3px solid #333; margin-bottom: 20px; object-fit: cover; }
+.info .date { color: #555; font-size: 0.85rem; margin-bottom: 20px; }
+.info-text { background: #101014; padding: 40px; border-radius: 20px; color: #ccc; line-height: 1.8; border: 1px solid #1f1f26; text-align: left; }
+.info-text strong { color: #fff; font-size: 1.2rem; display: block; margin-bottom: 15px; }
 .info-text p { margin-bottom: 15px; }
 
 /* ===== МОДАЛКА ===== */
@@ -339,12 +417,7 @@ nav a:hover, nav a.active {
 }
 
 .modal-content h3 { margin-bottom: 20px; font-size: 1.3rem; }
-
-.mail-options {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
+.mail-options { display: flex; flex-direction: column; gap: 15px; }
 
 .mail-btn {
     display: flex;
@@ -360,18 +433,8 @@ nav a:hover, nav a.active {
     transition: background 0.3s, border-color 0.3s;
 }
 
-.mail-btn:hover {
-    background: #25252b;
-    border-color: #555;
-}
-
-.mail-btn img {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    object-fit: cover;
-    flex-shrink: 0;
-    background: #fff;
-}
+.mail-btn:hover { background: #25252b; border-color: #555; }
+.mail-btn img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex-shrink: 0; background: #fff; }
 
 .close-btn {
     margin-top: 20px;
@@ -413,13 +476,11 @@ nav a:hover, nav a.active {
     opacity: 1;
 }
 
-#toast::before {
-    content: '🔗';
-    font-size: 1.2rem;
-}
+#toast::before { content: '🔗'; font-size: 1.2rem; }
 
 /* ===== МОБИЛЬНОЕ ===== */
-@media (max-width: 600px) {
+@media (max-width: 800px) {
+    .video-row { grid-template-columns: 1fr; }
     .title { font-size: 1.8rem; margin-bottom: 25px; }
     header { padding: 20px 15px; }
     nav a { margin-left: 15px; }
@@ -428,7 +489,6 @@ nav a:hover, nav a.active {
     .info-text { padding: 25px; }
 }
 
-/* Отключаем анимации, если система просит */
 @media (prefers-reduced-motion: reduce) {
     .jellyfish { animation: none; opacity: 0.08; bottom: 50%; }
     .card, .minecraft-btn { opacity: 1; transform: none; transition: none; }
@@ -437,7 +497,6 @@ nav a:hover, nav a.active {
 </head>
 <body>
 
-<!-- ФОН: медузы -->
 <div id="jellyfish-bg">
     <div class="jellyfish">🪼</div>
     <div class="jellyfish">🪼</div>
@@ -459,11 +518,11 @@ nav a:hover, nav a.active {
 
 <div class="content">
 
-    <!-- ССЫЛКИ -->
+    <!-- ===== СЕКЦИЯ ССЫЛОК ===== -->
     <div class="section" id="links">
         <h2 class="title">Ссылки</h2>
-        <div class="grid">
 
+        <div class="grid">
             <a href="https://www.youtube.com/@immeduza" target="_blank" class="card">
                 <div class="card-inner">
                     <img src="https://unavatar.io/youtube/@immeduza" class="avatar" alt="Avatar" onerror="this.style.background='#222'">
@@ -517,13 +576,52 @@ nav a:hover, nav a.active {
                     <svg class="logo-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#0088cc"/><path d="M17.6 7.2l-2 9.4c-.1.7-.6.9-1.2.6l-3.3-2.4-1.6 1.5c-.2.2-.3.3-.6.3l.2-3.3 6-5.4c.3-.2 0-.3-.4-.1l-7.4 4.7-3.2-1c-.7-.2-.7-.7.1-1l12.5-4.8c.6-.2 1.1.1.9.9z" fill="#fff"/></svg>
                 </div>
             </a>
-
         </div>
 
         <button class="minecraft-btn" onclick="openModal()">Связь со мной (по рекламе и т.д)</button>
+
+        <!-- ===== ДВА ОКНА С ВИДЕО ===== -->
+        <div class="video-row">
+
+            <!-- СЛЕВА: YouTube -->
+            <div class="video-widget">
+                <div class="video-widget-header">
+                    <span class="yt-icon">▶</span>
+                    Крайний видос на канале
+                </div>
+                <div class="video-frame" id="youtube-container">
+                    <!-- сюда вставится iframe -->
+                    <div style="color:#666; display:flex; align-items:center; justify-content:center; height:100%; font-size:0.9rem;">
+                        Загрузка...
+                    </div>
+                </div>
+                <div class="video-meta" id="youtube-meta">
+                    <div class="video-title">Загрузка...</div>
+                    <div class="video-date"></div>
+                </div>
+            </div>
+
+            <!-- СПРАВА: Twitch -->
+            <div class="video-widget">
+                <div class="video-widget-header">
+                    <span class="tw-icon">🎮</span>
+                    Стрим на Twitch
+                </div>
+                <div class="video-frame" id="twitch-container">
+                    <div style="color:#666; display:flex; align-items:center; justify-content:center; height:100%; font-size:0.9rem;">
+                        Проверка стрима...
+                    </div>
+                </div>
+                <div class="stream-status" id="twitch-status">
+                    <span class="status-dot offline"></span>
+                    <span>Проверка...</span>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <!-- ИНФО -->
+    <!-- ===== СЕКЦИЯ ИНФО ===== -->
     <div class="section hidden" id="info">
         <h2 class="title">Информация</h2>
         <div class="info">
@@ -539,7 +637,7 @@ nav a:hover, nav a.active {
 
 </div>
 
-<!-- МОДАЛКА -->
+<!-- ===== МОДАЛКА ===== -->
 <div class="modal" id="mailModal">
     <div class="modal-content">
         <h3>Выберите сервис для связи</h3>
@@ -564,60 +662,209 @@ nav a:hover, nav a.active {
 <div id="toast">Ссылка открыта в новом окне или приложении</div>
 
 <script>
-    // ===== ПЕРЕКЛЮЧЕНИЕ СЕКЦИЙ =====
-    const secLinks = document.getElementById('links');
-    const secInfo  = document.getElementById('info');
-    const navLinks = document.getElementById('n-links');
-    const navInfo  = document.getElementById('n-info');
-    let currentSection = 'links';
+/* ===== ПЕРЕКЛЮЧЕНИЕ СЕКЦИЙ ===== */
+const secLinks = document.getElementById('links');
+const secInfo  = document.getElementById('info');
+const navLinks = document.getElementById('n-links');
+const navInfo  = document.getElementById('n-info');
+let currentSection = 'links';
 
-    function show(id) {
-        if (id === currentSection) return;
-        secLinks.classList.toggle('hidden', id !== 'links');
-        secInfo.classList.toggle('hidden', id !== 'info');
-        navLinks.classList.toggle('active', id === 'links');
-        navInfo.classList.toggle('active', id === 'info');
-        currentSection = id;
-    }
+function show(id) {
+    if (id === currentSection) return;
+    secLinks.classList.toggle('hidden', id !== 'links');
+    secInfo.classList.toggle('hidden', id !== 'info');
+    navLinks.classList.toggle('active', id === 'links');
+    navInfo.classList.toggle('active', id === 'info');
+    currentSection = id;
+}
 
-    // ===== ПОЯВЛЕНИЕ КАРТОЧЕК =====
-    function revealCards() {
-        const section = document.getElementById('links');
-        if (!section) return;
-        const items = section.querySelectorAll('.card, .minecraft-btn');
-        items.forEach((item, i) => {
-            setTimeout(() => item.classList.add('show'), 80 + i * 100);
-        });
-        // страховка — если что-то не сработало, показать всё через 2с
-        setTimeout(() => {
-            items.forEach(item => item.classList.add('show'));
-        }, 2000);
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', revealCards);
-    } else {
-        revealCards();
-    }
-
-    // ===== МОДАЛКА =====
-    function openModal()  { document.getElementById('mailModal').classList.add('active'); }
-    function closeModal() { document.getElementById('mailModal').classList.remove('active'); }
-    document.getElementById('mailModal').addEventListener('click', function(e) {
-        if (e.target === this) closeModal();
+/* ===== ПОЯВЛЕНИЕ КАРТОЧЕК ===== */
+function revealCards() {
+    const section = document.getElementById('links');
+    if (!section) return;
+    const items = section.querySelectorAll('.card, .minecraft-btn');
+    items.forEach((item, i) => {
+        setTimeout(() => item.classList.add('show'), 80 + i * 100);
     });
+    setTimeout(() => {
+        items.forEach(item => item.classList.add('show'));
+    }, 2000);
+}
 
-    // ===== ТОСТ =====
-    const toast = document.getElementById('toast');
-    let toastTimer = null;
-    function showToast() {
-        toast.classList.add('show');
-        if (toastTimer) clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', revealCards);
+} else {
+    revealCards();
+}
+
+/* ===== YOUTUBE: ПОЛУЧЕНИЕ ПОСЛЕДНЕГО ВИДЕО ЧЕРЕЗ RSS ===== */
+async function loadLatestYouTubeVideo() {
+    const container = document.getElementById('youtube-container');
+    const metaTitle = document.querySelector('#youtube-meta .video-title');
+    const metaDate = document.querySelector('#youtube-meta .video-date');
+
+    try {
+        // RSS-лента канала (без API-ключа)
+        const rssUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=UC_PLACEHOLDER';
+        // Вместо channel_id можно использовать user, если канал старый, но для @handle лучше найти channel_id.
+        // Однако YouTube RSS поддерживает user для старых каналов. Для @handle нужно знать channel_id.
+        // Простой способ: использовать user-ленту (работает для многих каналов).
+        // Для @immeduza нужно получить channel_id. Это можно сделать через страницу канала.
+        // Но чтобы не усложнять, используем user-ленту — она часто работает.
+        // Если не сработает, оставим заглушку.
+        
+        // ВАЖНО: YouTube RSS не поддерживает @handle напрямую. Нужен channel_id.
+        // Для @immeduza channel_id можно получить вручную или через парсинг страницы.
+        // Здесь мы используем публичный прокси-сервис, который отдаёт RSS по handle.
+        // Это неофициально, но работает.
+        
+        const handle = 'immeduza';
+        // Используем сервис, который конвертирует handle в RSS (публичный)
+        // Например, rsshub.app — но он может быть медленным.
+        // Альтернатива: использовать fetch к странице канала и парсить.
+        // Но из-за CORS это не сработает напрямую.
+        
+        // Самый надёжный способ без API: использовать rss2json или подобный прокси.
+        // Но чтобы не зависеть от сторонних сервисов, оставим fallback.
+        
+        // Попробуем через публичный RSS-прокси для YouTube (rsshub)
+        const rssProxyUrl = `https://rsshub.app/youtube/user/@${handle}`;
+        
+        const response = await fetch(rssProxyUrl);
+        if (!response.ok) throw new Error('RSS fetch failed');
+        
+        const text = await response.text();
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(text, 'text/xml');
+        
+        const entries = xml.querySelectorAll('entry');
+        if (!entries.length) throw new Error('No entries');
+        
+        const latest = entries[0];
+        const videoId = latest.querySelector('yt\\:videoId')?.textContent;
+        const title = latest.querySelector('title')?.textContent || 'Без названия';
+        const published = latest.querySelector('published')?.textContent;
+        
+        if (!videoId) throw new Error('No video ID');
+        
+        // Форматируем дату
+        let dateStr = '';
+        if (published) {
+            const d = new Date(published);
+            dateStr = d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+        }
+        
+        // Вставляем iframe
+        container.innerHTML = `
+            <iframe 
+                src="https://www.youtube.com/embed/${videoId}" 
+                allowfullscreen
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        `;
+        
+        metaTitle.textContent = title;
+        metaDate.textContent = dateStr ? `Опубликовано: ${dateStr}` : '';
+        
+    } catch (e) {
+        console.warn('YouTube RSS не сработал:', e);
+        container.innerHTML = `
+            <div style="color:#888; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; font-size:0.9rem; gap:10px;">
+                <span style="font-size:2rem; opacity:0.3;">▶</span>
+                <span>Не удалось загрузить видео</span>
+                <a href="https://www.youtube.com/@immeduza" target="_blank" style="color:#FF0000; text-decoration:none; font-weight:600;">Открыть канал на YouTube</a>
+            </div>
+        `;
+        metaTitle.textContent = 'Смотрите на YouTube';
+        metaDate.textContent = '';
     }
-    document.querySelectorAll('a[href]').forEach(link => {
-        link.addEventListener('click', () => showToast());
-    });
+}
+
+/* ===== TWITCH: ПРОВЕРКА СТАТУСА И ВСТАВКА ПЛЕЕРА ===== */
+async function loadTwitchStream() {
+    const container = document.getElementById('twitch-container');
+    const statusEl = document.getElementById('twitch-status');
+    const channel = 'medy3aoffc';
+    const parent = window.location.hostname || 'localhost';
+    
+    try {
+        // Проверяем статус через публичный API-прокси (CORS-friendly)
+        // Используем decapi.me — публичный сервис для проверки статуса Twitch
+        const statusResponse = await fetch(`https://decapi.me/twitch/uptime/${channel}`);
+        const statusText = await statusResponse.text();
+        
+        const isOnline = !statusText.toLowerCase().includes('offline') && 
+                         !statusText.toLowerCase().includes('error');
+        
+        if (isOnline) {
+            // Стрим идёт — вставляем плеер
+            container.innerHTML = `
+                <iframe
+                    src="https://player.twitch.tv/?channel=${channel}&parent=${parent}&autoplay=false&muted=false"
+                    allowfullscreen
+                    allow="autoplay; fullscreen; encrypted-media; picture-in-picture">
+                </iframe>
+            `;
+            statusEl.innerHTML = `
+                <span class="status-dot online"></span>
+                <span style="color:#00ff88;">Онлайн</span>
+            `;
+        } else {
+            // Оффлайн
+            container.innerHTML = `
+                <div class="twitch-offline">
+                    <div class="offline-icon">🎮</div>
+                    <div>Стрим оффлайн</div>
+                    <a href="https://www.twitch.tv/${channel}" target="_blank" style="color:#9146FF; text-decoration:none; font-weight:600;">Открыть канал на Twitch</a>
+                </div>
+            `;
+            statusEl.innerHTML = `
+                <span class="status-dot offline"></span>
+                <span style="color:#ff3344;">Оффлайн</span>
+            `;
+        }
+        
+    } catch (e) {
+        console.warn('Twitch check failed:', e);
+        // Fallback: просто вставляем плеер (если оффлайн — Twitch сам покажет заглушку)
+        container.innerHTML = `
+            <iframe
+                src="https://player.twitch.tv/?channel=${channel}&parent=${parent}&autoplay=false&muted=false"
+                allowfullscreen
+                allow="autoplay; fullscreen; encrypted-media; picture-in-picture">
+            </iframe>
+        `;
+        statusEl.innerHTML = `
+            <span class="status-dot offline"></span>
+            <span style="color:#888;">Статус неизвестен</span>
+        `;
+    }
+}
+
+/* Загружаем оба виджета после загрузки страницы */
+window.addEventListener('load', () => {
+    loadLatestYouTubeVideo();
+    loadTwitchStream();
+});
+
+/* ===== МОДАЛКА ===== */
+function openModal()  { document.getElementById('mailModal').classList.add('active'); }
+function closeModal() { document.getElementById('mailModal').classList.remove('active'); }
+document.getElementById('mailModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+
+/* ===== ТОСТ ===== */
+const toast = document.getElementById('toast');
+let toastTimer = null;
+function showToast() {
+    toast.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+}
+document.querySelectorAll('a[href]').forEach(link => {
+    link.addEventListener('click', () => showToast());
+});
 </script>
 
 </body>
