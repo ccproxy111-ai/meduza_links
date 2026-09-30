@@ -84,7 +84,7 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
     transition: height 0.4s ease;
 }
 
-/* СЕКЦИИ - обе в потоке, но переключаются через opacity/transform */
+/* СЕКЦИИ */
 .section {
     width: 100%;
     transition: opacity 0.4s ease, transform 0.4s ease;
@@ -93,18 +93,10 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
 .section.hidden {
     display: none;
 }
-.section.fade-out-left {
-    animation: fadeOutLeft 0.4s ease forwards;
-}
-.section.fade-out-right {
-    animation: fadeOutRight 0.4s ease forwards;
-}
-.section.fade-in-left {
-    animation: fadeInLeft 0.4s ease forwards;
-}
-.section.fade-in-right {
-    animation: fadeInRight 0.4s ease forwards;
-}
+.section.fade-out-left { animation: fadeOutLeft 0.4s ease forwards; }
+.section.fade-out-right { animation: fadeOutRight 0.4s ease forwards; }
+.section.fade-in-left { animation: fadeInLeft 0.4s ease forwards; }
+.section.fade-in-right { animation: fadeInRight 0.4s ease forwards; }
 
 @keyframes fadeOutLeft {
     from { opacity: 1; transform: translateX(0); }
@@ -126,7 +118,7 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
 .title { font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 40px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
 
-/* КАРТОЧКИ */
+/* ===== КАРТОЧКИ ===== */
 .card {
     background: #101014; border-radius: 20px; padding: 30px;
     text-decoration: none; color: #fff; text-align: center;
@@ -136,6 +128,7 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
                 border-color 0.3s, box-shadow 0.4s, background 0.3s;
     position: relative;
     overflow: hidden;
+    will-change: transform;
 }
 .card::after {
     content: '';
@@ -148,13 +141,22 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
     pointer-events: none;
 }
 .card:hover::after { transform: translateX(100%) translateY(100%); }
+
 .card:hover {
-    transform: translateY(-8px) scale(1.03) rotate(-1deg);
     border-color: #444;
     box-shadow: 0 15px 30px rgba(0,0,0,0.6), 0 0 25px rgba(0,150,255,0.1);
     background: #15151a;
+    /* Плавное парение вверх-вниз + лёгкий наклон и увеличение */
+    animation: cardFloat 3s ease-in-out infinite;
 }
 .card:active { transform: translateY(-2px) scale(0.98); }
+
+/* Анимация парения при наведении */
+@keyframes cardFloat {
+    0%   { transform: translateY(-8px) scale(1.03) rotate(-1deg); }
+    50%  { transform: translateY(-14px) scale(1.04) rotate(1deg); }
+    100% { transform: translateY(-8px) scale(1.03) rotate(-1deg); }
+}
 
 .avatar {
     width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
@@ -164,7 +166,6 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
 .card:hover .avatar {
     border-color: #fff;
     box-shadow: 0 0 20px rgba(255,255,255,0.4);
-    transform: scale(1.1) rotate(5deg);
     animation: breathe 1.5s ease-in-out infinite;
 }
 @keyframes breathe {
@@ -191,7 +192,6 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
 .card:hover .avatar-placeholder {
     border-color: #fff;
     box-shadow: 0 0 20px rgba(0,255,255,0.5);
-    transform: scale(1.1) rotate(-5deg);
     animation: breathe 1.5s ease-in-out infinite;
 }
 
@@ -329,9 +329,25 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
         filter: blur(0);
     }
 }
+
+/* Fallback: если JS не сработал — показать карточки */
+.no-js .card,
+.no-js .minecraft-btn,
+.reveal-done .card,
+.reveal-done .minecraft-btn {
+    opacity: 1;
+    transform: none;
+    filter: none;
+}
+
+/* Уменьшаем анимации для тех, кто просит */
+@media (prefers-reduced-motion: reduce) {
+    .card, .minecraft-btn, .jellyfish { animation: none !important; }
+    .card, .minecraft-btn { opacity: 1; transform: none; filter: none; }
+}
 </style>
 </head>
-<body>
+<body class="no-js">
 
 <div id="jellyfish-bg">
     <div class="jellyfish">🪼</div>
@@ -445,6 +461,8 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
 <div id="toast">Ссылка открыта в новом окне или приложении</div>
 
 <script>
+    document.body.classList.remove('no-js');
+
     const secLinks = document.getElementById('links');
     const secInfo = document.getElementById('info');
     const navLinks = document.getElementById('n-links');
@@ -458,9 +476,8 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
 
         const from = id === 'links' ? secInfo : secLinks;
         const to = id === 'links' ? secLinks : secInfo;
-        const dir = id === 'links' ? 'right' : 'left'; // куда уезжает старый
+        const dir = id === 'links' ? 'right' : 'left';
 
-        // Старый: анимация исчезновения
         from.classList.add('fade-out-' + dir);
         from.classList.remove('hidden');
 
@@ -468,7 +485,6 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
             from.classList.add('hidden');
             from.classList.remove('fade-out-' + dir);
 
-            // Новый: показываем и анимируем появление
             to.classList.remove('hidden');
             to.classList.add('fade-in-' + dir);
 
@@ -483,18 +499,15 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
         currentSection = id;
     }
 
-    // Инициализация: показываем ссылки
     secLinks.classList.remove('hidden');
     secInfo.classList.add('hidden');
 
-    // Модальное окно
     function openModal() { document.getElementById('mailModal').classList.add('active'); playClick(); }
     function closeModal() { document.getElementById('mailModal').classList.remove('active'); playClick(); }
     document.getElementById('mailModal').addEventListener('click', function(e) {
         if (e.target === this) closeModal();
     });
 
-    // Плашка
     const toast = document.getElementById('toast');
     let toastTimer = null;
     function showToast() {
@@ -506,7 +519,6 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
         link.addEventListener('click', () => showToast());
     });
 
-    // Звуки
     let audioCtx = null;
     function getCtx() {
         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -538,17 +550,39 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
         el.addEventListener('click', playClick);
     });
 
-    // ===== АНИМАЦИЯ ПОЯВЛЕНИЯ КАРТОЧЕК ПРИ ЗАХОДЕ =====
-    window.addEventListener('load', () => {
+    // ===== АНИМАЦИЯ ПОЯВЛЕНИЯ КАРТОЧЕК =====
+    function runReveal() {
         const linksSection = document.getElementById('links');
+        if (!linksSection) return;
         const items = linksSection.querySelectorAll('.card, .minecraft-btn');
 
+        // Если уже показывались — не запускаем повторно
+        if (linksSection.dataset.revealed === '1') return;
+        linksSection.dataset.revealed = '1';
+
         items.forEach((item, index) => {
+            // Сброс на случай, если что-то уже проявилось
+            item.classList.remove('reveal');
+            // Принудительный reflow, чтобы анимация точно перезапустилась
+            void item.offsetWidth;
+
             setTimeout(() => {
                 item.classList.add('reveal');
-            }, index * 120);
+            }, 80 + index * 110);
         });
-    });
+
+        // Страховка: если по какой-то причине анимация не сработала —
+        // через 3 секунды принудительно показываем всё
+        setTimeout(() => {
+            items.forEach(item => item.classList.add('reveal'));
+        }, 3000);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', runReveal);
+    } else {
+        runReveal();
+    }
 </script>
 
 </body>
