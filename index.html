@@ -6,36 +6,52 @@
 <title>MeduzaGrief - Ссылки</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-body {
+
+html, body {
     background: #050508;
     color: #fff;
+    min-height: 100%;
+}
+
+body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-image: radial-gradient(circle at 50% 0%, #1a1a2e 0%, #050508 70%);
     overflow-x: hidden;
-    position: relative;
 }
 
-/* ФОНОВЫЕ МЕДУЗЫ */
+/* ===== ФОН С МЕДУЗАМИ ===== */
 #jellyfish-bg {
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
     z-index: 0;
     overflow: hidden;
 }
+
 .jellyfish {
     position: absolute;
+    bottom: -100px;
     font-size: 60px;
-    opacity: 0.08;
+    opacity: 0;
     animation: floatUp linear infinite;
-    filter: blur(1px);
+    will-change: transform, opacity;
 }
-.jellyfish:nth-child(1) { left: 5%; font-size: 50px; animation-duration: 25s; animation-delay: 0s; }
+
+@keyframes floatUp {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.12; }
+    90%  { opacity: 0.12; }
+    100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
+}
+
+.jellyfish:nth-child(1) { left: 5%;  font-size: 50px; animation-duration: 25s; animation-delay: 0s; }
 .jellyfish:nth-child(2) { left: 20%; font-size: 70px; animation-duration: 32s; animation-delay: -5s; }
 .jellyfish:nth-child(3) { left: 38%; font-size: 45px; animation-duration: 28s; animation-delay: -12s; }
 .jellyfish:nth-child(4) { left: 55%; font-size: 80px; animation-duration: 38s; animation-delay: -3s; }
@@ -43,312 +59,385 @@ body {
 .jellyfish:nth-child(6) { left: 88%; font-size: 65px; animation-duration: 35s; animation-delay: -8s; }
 .jellyfish:nth-child(7) { left: 45%; font-size: 40px; animation-duration: 22s; animation-delay: -14s; }
 .jellyfish:nth-child(8) { left: 10%; font-size: 75px; animation-duration: 40s; animation-delay: -22s; }
-@keyframes floatUp {
-    0% { transform: translateY(110vh) rotate(0deg) scale(1); opacity: 0; }
-    10% { opacity: 0.08; }
-    90% { opacity: 0.08; }
-    100% { transform: translateY(-20vh) rotate(360deg) scale(1.1); opacity: 0; }
-}
 
-header, .content { position: relative; z-index: 1; }
-
+/* ===== ХЕДЕР ===== */
 header {
-    width: 100%; max-width: 1000px;
-    display: flex; justify-content: space-between; align-items: center;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 30px 20px;
 }
+
 .logo {
-    font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     background: linear-gradient(90deg, #fff, #888);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    display: flex; align-items: center; gap: 8px;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
+
 .logo .emoji {
     -webkit-text-fill-color: initial;
     background: none;
     font-size: 1.3rem;
-    filter: drop-shadow(0 0 6px rgba(0, 150, 255, 0.6));
 }
+
 nav a {
-    color: #888; text-decoration: none; margin-left: 25px;
-    cursor: pointer; transition: 0.3s;
-    position: relative;
+    color: #888;
+    text-decoration: none;
+    margin-left: 25px;
+    cursor: pointer;
+    transition: color 0.3s;
 }
-nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
 
-/* КОНТЕЙНЕР СЕКЦИЙ */
+nav a:hover, nav a.active {
+    color: #fff;
+}
+
+/* ===== КОНТЕНТ ===== */
 .content {
-    width: 100%; max-width: 1000px; padding: 20px;
     position: relative;
-    overflow: hidden;
-    transition: height 0.4s ease;
-}
-
-/* СЕКЦИИ */
-.section {
+    z-index: 1;
     width: 100%;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    will-change: opacity, transform;
-}
-.section.hidden {
-    display: none;
-}
-.section.fade-out-left { animation: fadeOutLeft 0.4s ease forwards; }
-.section.fade-out-right { animation: fadeOutRight 0.4s ease forwards; }
-.section.fade-in-left { animation: fadeInLeft 0.4s ease forwards; }
-.section.fade-in-right { animation: fadeInRight 0.4s ease forwards; }
-
-@keyframes fadeOutLeft {
-    from { opacity: 1; transform: translateX(0); }
-    to { opacity: 0; transform: translateX(-40px); }
-}
-@keyframes fadeOutRight {
-    from { opacity: 1; transform: translateX(0); }
-    to { opacity: 0; transform: translateX(40px); }
-}
-@keyframes fadeInLeft {
-    from { opacity: 0; transform: translateX(40px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-@keyframes fadeInRight {
-    from { opacity: 0; transform: translateX(-40px); }
-    to { opacity: 1; transform: translateX(0); }
+    max-width: 1000px;
+    padding: 20px;
 }
 
-.title { font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 40px; }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.section { width: 100%; }
+.section.hidden { display: none; }
 
-/* ===== КАРТОЧКИ ===== */
+.title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+/* ===== КАРТОЧКА ===== */
 .card {
-    background: #101014; border-radius: 20px; padding: 30px;
-    text-decoration: none; color: #fff; text-align: center;
-    border: 1px solid #1f1f26;
-    display: flex; flex-direction: column; align-items: center;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                border-color 0.3s, box-shadow 0.4s, background 0.3s;
     position: relative;
-    overflow: hidden;
-    will-change: transform;
+    background: #101014;
+    border-radius: 20px;
+    padding: 30px;
+    text-decoration: none;
+    color: #fff;
+    text-align: center;
+    border: 1px solid #1f1f26;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* появление */
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.5s ease,
+                border-color 0.3s, box-shadow 0.3s, background 0.3s;
 }
-.card::after {
-    content: '';
-    position: absolute;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.06) 50%, transparent 60%);
-    transform: translateX(-100%) translateY(-100%);
-    transition: transform 0.6s;
-    pointer-events: none;
-}
-.card:hover::after { transform: translateX(100%) translateY(100%); }
 
+/* когда появилась */
+.card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* наведение */
 .card:hover {
     border-color: #444;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.6), 0 0 25px rgba(0,150,255,0.1);
     background: #15151a;
-    /* Плавное парение вверх-вниз + лёгкий наклон и увеличение */
-    animation: cardFloat 3s ease-in-out infinite;
-}
-.card:active { transform: translateY(-2px) scale(0.98); }
-
-/* Анимация парения при наведении */
-@keyframes cardFloat {
-    0%   { transform: translateY(-8px) scale(1.03) rotate(-1deg); }
-    50%  { transform: translateY(-14px) scale(1.04) rotate(1deg); }
-    100% { transform: translateY(-8px) scale(1.03) rotate(-1deg); }
+    box-shadow: 0 12px 30px rgba(0,0,0,0.6), 0 0 25px rgba(0,150,255,0.1);
 }
 
+/* внутренний контейнер для парения, чтобы не конфликтовать с появлением */
+.card-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    transition: transform 0.4s ease;
+}
+
+.card:hover .card-inner {
+    animation: floatCard 2.2s ease-in-out infinite;
+}
+
+@keyframes floatCard {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-5px); }
+    100% { transform: translateY(0); }
+}
+
+/* аватарки */
 .avatar {
-    width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
-    margin-bottom: 15px; border: 2px solid #333; background: #1a1a1f;
-    transition: 0.4s;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 2px solid #333;
+    background: #1a1a1f;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
+
 .card:hover .avatar {
     border-color: #fff;
-    box-shadow: 0 0 20px rgba(255,255,255,0.4);
-    animation: breathe 1.5s ease-in-out infinite;
+    box-shadow: 0 0 18px rgba(255,255,255,0.4);
 }
-@keyframes breathe {
-    0%, 100% { transform: scale(1.1) rotate(5deg); }
-    50% { transform: scale(1.15) rotate(-3deg); }
-}
-.logo-svg { width: 40px; height: 40px; margin-top: 10px; transition: 0.4s; }
-.card:hover .logo-svg {
-    transform: scale(1.2) rotate(-10deg);
-    filter: drop-shadow(0 0 10px rgba(255,255,255,0.4));
-}
-.card h3 { font-size: 1.2rem; margin-bottom: 5px; transition: 0.3s; }
-.card:hover h3 { letter-spacing: 1px; }
-.card p { font-size: 0.85rem; color: #888; font-weight: 400; }
 
 .avatar-placeholder {
-    width: 80px; height: 80px; border-radius: 50%;
-    margin-bottom: 15px; border: 2px solid #333;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    border: 2px solid #333;
     background: #00BFFF;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2.2rem; font-weight: 800; color: #fff;
-    transition: 0.4s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #fff;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
+
 .card:hover .avatar-placeholder {
     border-color: #fff;
-    box-shadow: 0 0 20px rgba(0,255,255,0.5);
-    animation: breathe 1.5s ease-in-out infinite;
+    box-shadow: 0 0 18px rgba(0,255,255,0.5);
 }
 
-.minecraft-btn {
-    display: block; width: 100%; margin-top: 30px;
-    background: #4a4a4a; color: #fff; text-align: center;
-    padding: 20px; border-radius: 8px; font-size: 1.2rem; font-weight: 600;
-    text-decoration: none; cursor: pointer; border: none;
-    border-top: 4px solid #6a6a6a; border-left: 4px solid #6a6a6a;
-    border-bottom: 4px solid #2a2a2a; border-right: 4px solid #2a2a2a;
-    transition: 0.15s;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-    position: relative;
-    overflow: hidden;
+.logo-svg {
+    width: 40px; height: 40px;
+    margin-top: 10px;
+    transition: transform 0.3s;
 }
+
+.card:hover .logo-svg {
+    transform: scale(1.15) rotate(-8deg);
+}
+
+.card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.card p {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/* ===== КНОПКА СВЯЗИ ===== */
+.minecraft-btn {
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+    background: #4a4a4a;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    border-top: 4px solid #6a6a6a;
+    border-left: 4px solid #6a6a6a;
+    border-bottom: 4px solid #2a2a2a;
+    border-right: 4px solid #2a2a2a;
+    transition: background 0.15s, transform 0.15s,
+                opacity 0.5s ease;
+    /* появление */
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+.minecraft-btn.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .minecraft-btn:hover {
     background: #5a5a5a;
-    transform: scale(1.01);
-    letter-spacing: 0.5px;
-}
-.minecraft-btn:active {
-    border-top: 4px solid #2a2a2a; border-left: 4px solid #2a2a2a;
-    border-bottom: 4px solid #6a6a6a; border-right: 4px solid #6a6a6a;
-    transform: translateY(3px) scale(0.99);
 }
 
-.info { text-align: center; max-width: 800px; margin: 0 auto; }
-.info img { width: 150px; height: 150px; border-radius: 50%; border: 3px solid #333; margin-bottom: 20px; object-fit: cover; }
-.info .date { color: #555; font-size: 0.85rem; margin-bottom: 20px; }
-.info-text {
-    background: #101014; padding: 40px; border-radius: 20px;
-    color: #ccc; line-height: 1.8; border: 1px solid #1f1f26; text-align: left;
+.minecraft-btn:active {
+    border-top: 4px solid #2a2a2a;
+    border-left: 4px solid #2a2a2a;
+    border-bottom: 4px solid #6a6a6a;
+    border-right: 4px solid #6a6a6a;
+    transform: translateY(3px);
 }
-.info-text strong { color: #fff; font-size: 1.2rem; display: block; margin-bottom: 15px; }
+
+/* ===== ИНФО ===== */
+.info { text-align: center; max-width: 800px; margin: 0 auto; }
+
+.info img {
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    border: 3px solid #333;
+    margin-bottom: 20px;
+    object-fit: cover;
+}
+
+.info .date {
+    color: #555;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+}
+
+.info-text {
+    background: #101014;
+    padding: 40px;
+    border-radius: 20px;
+    color: #ccc;
+    line-height: 1.8;
+    border: 1px solid #1f1f26;
+    text-align: left;
+}
+
+.info-text strong {
+    color: #fff;
+    font-size: 1.2rem;
+    display: block;
+    margin-bottom: 15px;
+}
+
 .info-text p { margin-bottom: 15px; }
 
+/* ===== МОДАЛКА ===== */
 .modal {
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
-    justify-content: center; align-items: center; z-index: 1000;
-    opacity: 0; transition: opacity 0.3s;
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
 }
-.modal.active { display: flex; opacity: 1; }
+
+.modal.active { display: flex; }
+
 .modal-content {
-    background: #1a1a1f; padding: 30px; border-radius: 20px;
-    border: 1px solid #333; text-align: center; max-width: 400px; width: 90%;
-    animation: modalIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: #1a1a1f;
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid #333;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
 }
-@keyframes modalIn {
-    from { opacity: 0; transform: scale(0.8) translateY(20px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
-}
+
 .modal-content h3 { margin-bottom: 20px; font-size: 1.3rem; }
-.mail-options { display: flex; flex-direction: column; gap: 15px; }
-.mail-btn {
-    display: flex; align-items: center; gap: 15px;
-    padding: 15px 20px; border-radius: 12px; text-decoration: none;
-    color: #fff; font-weight: 600; transition: all 0.3s;
-    border: 1px solid #2a2a30; background: #101014;
+
+.mail-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
+
+.mail-btn {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    border: 1px solid #2a2a30;
+    background: #101014;
+    transition: background 0.3s, border-color 0.3s;
+}
+
 .mail-btn:hover {
     background: #25252b;
     border-color: #555;
-    transform: translateX(5px) scale(1.02);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
-.mail-btn:active { transform: translateX(2px) scale(0.98); }
+
 .mail-btn img {
-    width: 36px; height: 36px; border-radius: 50%;
-    object-fit: cover; flex-shrink: 0; background: #fff;
-    transition: 0.3s;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: #fff;
 }
-.mail-btn:hover img { transform: rotate(-8deg) scale(1.1); }
 
 .close-btn {
-    margin-top: 20px; background: #333; color: #fff; border: none;
-    padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: 0.2s;
+    margin-top: 20px;
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
 }
-.close-btn:hover { background: #555; transform: scale(1.05); }
-.close-btn:active { transform: scale(0.95); }
 
+.close-btn:hover { background: #555; }
+
+/* ===== ТОСТ ===== */
 #toast {
     position: fixed;
-    bottom: 30px; left: 50%;
+    bottom: 30px;
+    left: 50%;
     transform: translateX(-50%) translateY(150%);
     background: #1a1a1f;
     color: #fff;
     padding: 15px 25px;
     border-radius: 12px;
     border: 1px solid #333;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(0,150,255,0.15);
     font-size: 0.95rem;
     font-weight: 500;
-    display: flex; align-items: center; gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     z-index: 2000;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+    transition: transform 0.4s ease, opacity 0.3s;
     opacity: 0;
     pointer-events: none;
 }
+
 #toast.show {
     transform: translateX(-50%) translateY(0);
     opacity: 1;
 }
+
 #toast::before {
     content: '🔗';
     font-size: 1.2rem;
 }
 
-/* ===== АНИМАЦИЯ ПОЯВЛЕНИЯ КАРТОЧЕК ===== */
-.card,
-.minecraft-btn {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-    filter: blur(6px);
+/* ===== МОБИЛЬНОЕ ===== */
+@media (max-width: 600px) {
+    .title { font-size: 1.8rem; margin-bottom: 25px; }
+    header { padding: 20px 15px; }
+    nav a { margin-left: 15px; }
+    .content { padding: 15px; }
+    .grid { grid-template-columns: 1fr; }
+    .info-text { padding: 25px; }
 }
 
-.card.reveal,
-.minecraft-btn.reveal {
-    animation: cardReveal 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-@keyframes cardReveal {
-    0% {
-        opacity: 0;
-        transform: translateY(30px) scale(0.95);
-        filter: blur(6px);
-    }
-    60% {
-        opacity: 1;
-        filter: blur(0);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        filter: blur(0);
-    }
-}
-
-/* Fallback: если JS не сработал — показать карточки */
-.no-js .card,
-.no-js .minecraft-btn,
-.reveal-done .card,
-.reveal-done .minecraft-btn {
-    opacity: 1;
-    transform: none;
-    filter: none;
-}
-
-/* Уменьшаем анимации для тех, кто просит */
+/* Отключаем анимации, если система просит */
 @media (prefers-reduced-motion: reduce) {
-    .card, .minecraft-btn, .jellyfish { animation: none !important; }
-    .card, .minecraft-btn { opacity: 1; transform: none; filter: none; }
+    .jellyfish { animation: none; opacity: 0.08; bottom: 50%; }
+    .card, .minecraft-btn { opacity: 1; transform: none; transition: none; }
 }
 </style>
 </head>
-<body class="no-js">
+<body>
 
+<!-- ФОН: медузы -->
 <div id="jellyfish-bg">
     <div class="jellyfish">🪼</div>
     <div class="jellyfish">🪼</div>
@@ -368,60 +457,73 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
     </nav>
 </header>
 
-<div class="content" id="content">
+<div class="content">
 
-    <!-- СЕКЦИЯ ССЫЛОК -->
+    <!-- ССЫЛКИ -->
     <div class="section" id="links">
         <h2 class="title">Ссылки</h2>
         <div class="grid">
 
             <a href="https://www.youtube.com/@immeduza" target="_blank" class="card">
-                <img src="https://unavatar.io/youtube/@immeduza" class="avatar" alt="Avatar" onerror="this.style.background='#222'">
-                <h3>MeduzaGrief</h3>
-                <p>YouTube</p>
-                <svg class="logo-svg" viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8z" fill="#FF0000"/><path d="M9.5 15.6V8.4L15.8 12l-6.3 3.6z" fill="#fff"/></svg>
+                <div class="card-inner">
+                    <img src="https://unavatar.io/youtube/@immeduza" class="avatar" alt="Avatar" onerror="this.style.background='#222'">
+                    <h3>MeduzaGrief</h3>
+                    <p>YouTube</p>
+                    <svg class="logo-svg" viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8z" fill="#FF0000"/><path d="M9.5 15.6V8.4L15.8 12l-6.3 3.6z" fill="#fff"/></svg>
+                </div>
             </a>
 
             <a href="https://t.me/meduzagrief" target="_blank" class="card">
-                <img src="https://unavatar.io/telegram/meduzagrief" class="avatar" alt="Avatar" onerror="this.style.background='#222'">
-                <h3>ТУТ МЕДУЗА 🪼</h3>
-                <p>Telegram</p>
-                <svg class="logo-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#0088cc"/><path d="M17.6 7.2l-2 9.4c-.1.7-.6.9-1.2.6l-3.3-2.4-1.6 1.5c-.2.2-.3.3-.6.3l.2-3.3 6-5.4c.3-.2 0-.3-.4-.1l-7.4 4.7-3.2-1c-.7-.2-.7-.7.1-1l12.5-4.8c.6-.2 1.1.1.9.9z" fill="#fff"/></svg>
+                <div class="card-inner">
+                    <img src="https://unavatar.io/telegram/meduzagrief" class="avatar" alt="Avatar" onerror="this.style.background='#222'">
+                    <h3>ТУТ МЕДУЗА 🪼</h3>
+                    <p>Telegram</p>
+                    <svg class="logo-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#0088cc"/><path d="M17.6 7.2l-2 9.4c-.1.7-.6.9-1.2.6l-3.3-2.4-1.6 1.5c-.2.2-.3.3-.6.3l.2-3.3 6-5.4c.3-.2 0-.3-.4-.1l-7.4 4.7-3.2-1c-.7-.2-.7-.7.1-1l12.5-4.8c.6-.2 1.1.1.9.9z" fill="#fff"/></svg>
+                </div>
             </a>
 
             <a href="https://www.twitch.tv/medy3aoffc" target="_blank" class="card">
-                <img src="https://unavatar.io/twitch/medy3aoffc" class="avatar" alt="Avatar" onerror="this.style.background='#222'">
-                <h3>medy3aoffc</h3>
-                <p>Twitch</p>
-                <svg class="logo-svg" viewBox="0 0 24 24"><path d="M4 2L2 5v15h5v3l3-3h5l6-6V2H4zm16 13l-3 3h-5l-3 3v-3H5V4h15v11z" fill="#9146FF"/><path d="M11 7h2v6h-2z" fill="#fff"/><path d="M16 7h2v6h-2z" fill="#fff"/></svg>
+                <div class="card-inner">
+                    <img src="https://unavatar.io/twitch/medy3aoffc" class="avatar" alt="Avatar" onerror="this.style.background='#222'">
+                    <h3>medy3aoffc</h3>
+                    <p>Twitch</p>
+                    <svg class="logo-svg" viewBox="0 0 24 24"><path d="M4 2L2 5v15h5v3l3-3h5l6-6V2H4zm16 13l-3 3h-5l-3 3v-3H5V4h15v11z" fill="#9146FF"/><path d="M11 7h2v6h-2z" fill="#fff"/><path d="M16 7h2v6h-2z" fill="#fff"/></svg>
+                </div>
             </a>
 
             <a href="https://vk.ru/id873786966" target="_blank" class="card">
-                <img src="https://media.discordapp.net/attachments/1499840717235687527/1554519652426846278/1nirT8__NRlMJCkPiAgRWHAgJ81yPv-5vycozMGJ86KeWsy7MyZThZzANEsRmXY11oWc3P0o2TghAITa2vBF7XgP.jpg?ex=6abd2ebe&is=6abbdd3e&hm=d646df4cfa0bb7395ac1f86e1727497cee3a55ffdf3c9d8077e168dbe56d552f&=&format=webp&width=865&height=1024" class="avatar" alt="Avatar">
-                <h3>Никита Белин</h3>
-                <p>ВКонтакте</p>
-                <svg class="logo-svg" viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#0077FF"/><path d="M13.2 17.8c-5.8 0-9.1-4-9.2-10.6h2.9c.1 4.9 2.3 7 4 7.4V7.2h2.7v4.4c1.7-.2 3.5-2.2 4.1-4.4h2.7c-.5 2.7-2.4 4.7-3.8 5.5 1.4.7 3.5 2.5 4.3 5.1h-3c-.6-1.9-2.1-3.4-4.3-3.6v3.6h-.4z" fill="#fff"/></svg>
+                <div class="card-inner">
+                    <img src="https://media.discordapp.net/attachments/1499840717235687527/1554519652426846278/1nirT8__NRlMJCkPiAgRWHAgJ81yPv-5vycozMGJ86KeWsy7MyZThZzANEsRmXY11oWc3P0o2TghAITa2vBF7XgP.jpg?ex=6abd2ebe&is=6abbdd3e&hm=d646df4cfa0bb7395ac1f86e1727497cee3a55ffdf3c9d8077e168dbe56d552f&=&format=webp&width=865&height=1024" class="avatar" alt="Avatar">
+                    <h3>Никита Белин</h3>
+                    <p>ВКонтакте</p>
+                    <svg class="logo-svg" viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#0077FF"/><path d="M13.2 17.8c-5.8 0-9.1-4-9.2-10.6h2.9c.1 4.9 2.3 7 4 7.4V7.2h2.7v4.4c1.7-.2 3.5-2.2 4.1-4.4h2.7c-.5 2.7-2.4 4.7-3.8 5.5 1.4.7 3.5 2.5 4.3 5.1h-3c-.6-1.9-2.1-3.4-4.3-3.6v3.6h-.4z" fill="#fff"/></svg>
+                </div>
             </a>
 
             <a href="https://steamcommunity.com/profiles/76561199509007013/" target="_blank" class="card">
-                <img src="https://media.discordapp.net/attachments/1499840717235687527/1554519652766326815/7e2b01b4a6d4d0e528e827d3e2b7d09ea413b9b6_full.jpg?ex=6abd2ebe&is=6abbdd3e&hm=605669d3777047cbb5e95d7007ba62c73346801eab31458c7d63f70022606390&=&format=webp" class="avatar" alt="Avatar">
-                <h3>медуза</h3>
-                <p>Steam профиль</p>
-                <svg class="logo-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#171a21"/><path d="M12 2a10 10 0 0 0-9.9 8.6l5.3 2.2a2.8 2.8 0 0 1 1.5-.4h.2l2.4-3.5v-.1a3.7 3.7 0 1 1 3.7 3.7h-.1l-3.4 2.4v.2a2.8 2.8 0 0 1-5.6.4L2 13.8A10 10 0 1 0 12 2zm-3.3 13.3l-1.2-.5a2.1 2.1 0 0 0 3.7-1.3 2.1 2.1 0 0 0-2.1-2.1c-.2 0-.3 0-.5.1l1.2.5a1.5 1.5 0 1 1-1.1 2.8zm8-2.8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm0-4.3a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z" fill="#fff"/></svg>
+                <div class="card-inner">
+                    <img src="https://media.discordapp.net/attachments/1499840717235687527/1554519652766326815/7e2b01b4a6d4d0e528e827d3e2b7d09ea413b9b6_full.jpg?ex=6abd2ebe&is=6abbdd3e&hm=605669d3777047cbb5e95d7007ba62c73346801eab31458c7d63f70022606390&=&format=webp" class="avatar" alt="Avatar">
+                    <h3>медуза</h3>
+                    <p>Steam профиль</p>
+                    <svg class="logo-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#171a21"/><path d="M12 2a10 10 0 0 0-9.9 8.6l5.3 2.2a2.8 2.8 0 0 1 1.5-.4h.2l2.4-3.5v-.1a3.7 3.7 0 1 1 3.7 3.7h-.1l-3.4 2.4v.2a2.8 2.8 0 0 1-5.6.4L2 13.8A10 10 0 1 0 12 2zm-3.3 13.3l-1.2-.5a2.1 2.1 0 0 0 3.7-1.3 2.1 2.1 0 0 0-2.1-2.1c-.2 0-.3 0-.5.1l1.2.5a1.5 1.5 0 1 1-1.1 2.8zm8-2.8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm0-4.3a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z" fill="#fff"/></svg>
+                </div>
             </a>
 
             <a href="https://t.me/meduzagrief_bot" target="_blank" class="card">
-                <div class="avatar-placeholder">P</div>
-                <h3>predlowkamdz</h3>
-                <p>Telegram -> Предложка</p>
-                <svg class="logo-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#0088cc"/><path d="M17.6 7.2l-2 9.4c-.1.7-.6.9-1.2.6l-3.3-2.4-1.6 1.5c-.2.2-.3.3-.6.3l.2-3.3 6-5.4c.3-.2 0-.3-.4-.1l-7.4 4.7-3.2-1c-.7-.2-.7-.7.1-1l12.5-4.8c.6-.2 1.1.1.9.9z" fill="#fff"/></svg>
+                <div class="card-inner">
+                    <div class="avatar-placeholder">P</div>
+                    <h3>predlowkamdz</h3>
+                    <p>Telegram → Предложка</p>
+                    <svg class="logo-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#0088cc"/><path d="M17.6 7.2l-2 9.4c-.1.7-.6.9-1.2.6l-3.3-2.4-1.6 1.5c-.2.2-.3.3-.6.3l.2-3.3 6-5.4c.3-.2 0-.3-.4-.1l-7.4 4.7-3.2-1c-.7-.2-.7-.7.1-1l12.5-4.8c.6-.2 1.1.1.9.9z" fill="#fff"/></svg>
+                </div>
             </a>
 
         </div>
+
         <button class="minecraft-btn" onclick="openModal()">Связь со мной (по рекламе и т.д)</button>
     </div>
 
-    <!-- СЕКЦИЯ ИНФОРМАЦИИ -->
+    <!-- ИНФО -->
     <div class="section hidden" id="info">
         <h2 class="title">Информация</h2>
         <div class="info">
@@ -437,6 +539,7 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
 
 </div>
 
+<!-- МОДАЛКА -->
 <div class="modal" id="mailModal">
     <div class="modal-content">
         <h3>Выберите сервис для связи</h3>
@@ -461,53 +564,50 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
 <div id="toast">Ссылка открыта в новом окне или приложении</div>
 
 <script>
-    document.body.classList.remove('no-js');
-
+    // ===== ПЕРЕКЛЮЧЕНИЕ СЕКЦИЙ =====
     const secLinks = document.getElementById('links');
-    const secInfo = document.getElementById('info');
+    const secInfo  = document.getElementById('info');
     const navLinks = document.getElementById('n-links');
-    const navInfo = document.getElementById('n-info');
+    const navInfo  = document.getElementById('n-info');
     let currentSection = 'links';
-    let animating = false;
 
     function show(id) {
-        if (id === currentSection || animating) return;
-        animating = true;
-
-        const from = id === 'links' ? secInfo : secLinks;
-        const to = id === 'links' ? secLinks : secInfo;
-        const dir = id === 'links' ? 'right' : 'left';
-
-        from.classList.add('fade-out-' + dir);
-        from.classList.remove('hidden');
-
-        setTimeout(() => {
-            from.classList.add('hidden');
-            from.classList.remove('fade-out-' + dir);
-
-            to.classList.remove('hidden');
-            to.classList.add('fade-in-' + dir);
-
-            setTimeout(() => {
-                to.classList.remove('fade-in-' + dir);
-                animating = false;
-            }, 400);
-        }, 400);
-
+        if (id === currentSection) return;
+        secLinks.classList.toggle('hidden', id !== 'links');
+        secInfo.classList.toggle('hidden', id !== 'info');
         navLinks.classList.toggle('active', id === 'links');
         navInfo.classList.toggle('active', id === 'info');
         currentSection = id;
     }
 
-    secLinks.classList.remove('hidden');
-    secInfo.classList.add('hidden');
+    // ===== ПОЯВЛЕНИЕ КАРТОЧЕК =====
+    function revealCards() {
+        const section = document.getElementById('links');
+        if (!section) return;
+        const items = section.querySelectorAll('.card, .minecraft-btn');
+        items.forEach((item, i) => {
+            setTimeout(() => item.classList.add('show'), 80 + i * 100);
+        });
+        // страховка — если что-то не сработало, показать всё через 2с
+        setTimeout(() => {
+            items.forEach(item => item.classList.add('show'));
+        }, 2000);
+    }
 
-    function openModal() { document.getElementById('mailModal').classList.add('active'); playClick(); }
-    function closeModal() { document.getElementById('mailModal').classList.remove('active'); playClick(); }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', revealCards);
+    } else {
+        revealCards();
+    }
+
+    // ===== МОДАЛКА =====
+    function openModal()  { document.getElementById('mailModal').classList.add('active'); }
+    function closeModal() { document.getElementById('mailModal').classList.remove('active'); }
     document.getElementById('mailModal').addEventListener('click', function(e) {
         if (e.target === this) closeModal();
     });
 
+    // ===== ТОСТ =====
     const toast = document.getElementById('toast');
     let toastTimer = null;
     function showToast() {
@@ -518,71 +618,6 @@ nav a:hover, nav a.active { color: #fff; text-shadow: 0 0 10px #fff; }
     document.querySelectorAll('a[href]').forEach(link => {
         link.addEventListener('click', () => showToast());
     });
-
-    let audioCtx = null;
-    function getCtx() {
-        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        return audioCtx;
-    }
-    function playTone(freq, duration, vol) {
-        try {
-            const ctx = getCtx();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'sine';
-            osc.frequency.value = freq;
-            gain.gain.setValueAtTime(vol, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start();
-            osc.stop(ctx.currentTime + duration);
-        } catch(e) {}
-    }
-    function playClick() {
-        playTone(600, 0.08, 0.08);
-        setTimeout(() => playTone(900, 0.06, 0.05), 40);
-    }
-    function playHover() { playTone(1200, 0.04, 0.03); }
-
-    document.querySelectorAll('.card, .minecraft-btn, .mail-btn, .close-btn, nav a').forEach(el => {
-        el.addEventListener('mouseenter', playHover);
-        el.addEventListener('click', playClick);
-    });
-
-    // ===== АНИМАЦИЯ ПОЯВЛЕНИЯ КАРТОЧЕК =====
-    function runReveal() {
-        const linksSection = document.getElementById('links');
-        if (!linksSection) return;
-        const items = linksSection.querySelectorAll('.card, .minecraft-btn');
-
-        // Если уже показывались — не запускаем повторно
-        if (linksSection.dataset.revealed === '1') return;
-        linksSection.dataset.revealed = '1';
-
-        items.forEach((item, index) => {
-            // Сброс на случай, если что-то уже проявилось
-            item.classList.remove('reveal');
-            // Принудительный reflow, чтобы анимация точно перезапустилась
-            void item.offsetWidth;
-
-            setTimeout(() => {
-                item.classList.add('reveal');
-            }, 80 + index * 110);
-        });
-
-        // Страховка: если по какой-то причине анимация не сработала —
-        // через 3 секунды принудительно показываем всё
-        setTimeout(() => {
-            items.forEach(item => item.classList.add('reveal'));
-        }, 3000);
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', runReveal);
-    } else {
-        runReveal();
-    }
 </script>
 
 </body>
